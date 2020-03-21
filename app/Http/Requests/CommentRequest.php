@@ -24,7 +24,8 @@ class CommentRequest extends FormRequest
     public function rules()
     {
         return [
-            'body' => 'required|max:2000'
+            'body' => 'required|max:2000',
+            'parent_id' => 'nullable|exists:comments,id'
         ];
     }
 }

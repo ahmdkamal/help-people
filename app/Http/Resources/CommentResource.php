@@ -19,6 +19,7 @@ class CommentResource extends JsonResource
             'body' => $this->body,
             'user' => $this->user,
             'edited' => $this->edited ?? false,
+            'replies' => CommentResource::collection($this->replies),
             'created_at' => strtotime($this->created_at)
         ];
     }

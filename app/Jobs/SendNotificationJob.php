@@ -12,18 +12,19 @@ use Illuminate\Queue\SerializesModels;
 class SendNotificationJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
-    private $notifiable_user, $commented_user, $post_id, $body;
+    private $notifiable_user, $commented_user, $post_id, $body, $title;
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct($notifiable_user, $commented_user, $post_id, $body)
+    public function __construct($notifiable_user, $commented_user, $post_id, $body, $title)
     {
         $this->notifiable_user = $notifiable_user;
         $this->commented_user = $commented_user;
         $this->post_id = $post_id;
         $this->body = $body;
+        $this->title = $title;
     }
 
     /**
@@ -35,7 +36,7 @@ class SendNotificationJob implements ShouldQueue
     {
         NotificationsController::sendToUser($this->notifiable_user,
             [
-                'title' => "$this->commented_user commented to a post you are following",
+                'title' => $this->title,
                 "body" => "$this->body",
                 "post_id" => $this->post_id
             ]);
