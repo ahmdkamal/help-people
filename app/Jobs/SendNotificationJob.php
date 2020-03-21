@@ -12,16 +12,15 @@ use Illuminate\Queue\SerializesModels;
 class SendNotificationJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
-    private $notifiable_user, $commented_user, $post_id, $body, $title;
+    private $notifiable_user, $post_id, $body, $title;
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct($notifiable_user, $commented_user, $post_id, $body, $title)
+    public function __construct($notifiable_user, $post_id, $body, $title)
     {
         $this->notifiable_user = $notifiable_user;
-        $this->commented_user = $commented_user;
         $this->post_id = $post_id;
         $this->body = $body;
         $this->title = $title;

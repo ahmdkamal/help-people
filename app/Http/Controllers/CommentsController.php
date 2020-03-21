@@ -48,7 +48,7 @@ class CommentsController extends Controller
                 'body' => $body,
                 "post_id" => $post->id,
             ]);
-            SendNotificationJob::dispatch($user, $commented_user, $post->id, $body, $title);
+            SendNotificationJob::dispatch($user, $post->id, $body, $title);
         }
 
         return response()->json([

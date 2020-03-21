@@ -44,7 +44,7 @@ class NotificationsController extends Controller
     public static function sendToTopicAndroid($topic, $array)
     {
         $fields = self::androidObject($array);
-        $fields = array_add($fields, 'to', '/topics/' . $topic.'_android');
+        $fields['to'] =   '/topics/' . $topic.'_android';
         self::sendUsingFirebase($fields);
         return;
     }
@@ -52,7 +52,7 @@ class NotificationsController extends Controller
     public static function sendToTopicIOS($topic, $array)
     {
         $fields = self::iosObject($array);
-        $fields = array_add($fields, 'to', '/topics/' . $topic.'_ios');
+        $fields['to'] =   '/topics/' . $topic.'_ios';
         self::sendUsingFirebase($fields);
         return;
     }
@@ -75,7 +75,7 @@ class NotificationsController extends Controller
         $payload['category'] = $array['type'];
         $paylaod['content_available'] = 1;
 
-        $apns = array_add($apns, 'payload', $payload);
+        $apns['payload'] = $payload;
         if (array_key_exists('image', $array)) {
 
             $array['click_action'] = 'WithImage';
@@ -125,7 +125,7 @@ class NotificationsController extends Controller
                     $fields = self::iosObject($array);
                 }
 
-                $fields = array_add($fields, 'to', $device->device_token);
+                $fields['to'] = $device->device_token;
                 self::sendUsingFirebase($fields);
             }
         }
