@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Comment extends Model
 {
     use Uuids;
-    protected $fillable = ['body', 'post_id', 'user_id', 'edited'];
+    protected $fillable = ['body', 'post_id', 'user_id', 'edited', 'parent_id'];
     public $incrementing = false;
 
     public function post()

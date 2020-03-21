@@ -17,7 +17,7 @@ class CommentsController extends Controller
     {
         $post = Post::where('id', request('post'))->firstOrFail();
         request()->merge(['user_id' => auth()->id()]);
-        $comment = $post->comments()->create(request()->all());
+        $comment = $post->comments()->where('parent_id', null)->create(request()->all());
 
         $unfollowers = Unfollower::where('post_id', $post->id)->distinct()->pluck('user_id')->toArray();
         $unfollowers[] = auth()->user()->id;

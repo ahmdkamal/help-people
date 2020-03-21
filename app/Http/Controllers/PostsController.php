@@ -23,10 +23,12 @@ class PostsController extends Controller
         $per_page = request()->per_page && is_int(request()->per_page) ? request()->per_page : 10;
 
         $posts = Post::query();
-        $posts = $offer_help ? $offer_help->where('offer_help', $offer_help) : $posts;
+        $posts = $offer_help ? $posts->where('offer_help', $offer_help) : $posts;
+
         $posts = $own == true
             ? $posts->where('user_id', Auth::id())
             : $posts->where('user_id', '!=', Auth::id());
+
         $posts = $type_id ? $posts->where('type_id', $type_id) : $posts;
 
         $posts = !$own ? $posts
@@ -47,7 +49,7 @@ class PostsController extends Controller
     public function store(PostRequest $postRequest)
     {
         request()->merge(['user_id' => Auth::id()]);
-
+        request()->merge(['offer_help' => (boolean) request('offer_help')]);
 
         $post = Post::create(request()->all());
 
