@@ -69,7 +69,7 @@ class PostsController extends Controller
 
     public function show()
     {
-        $post = Post::where('id', request('post'))->firstOrFail();
+        $post = Post::with('comments')->where('id', request('post'))->firstOrFail();
         $post = PostResource::make($post);
 
         return response()->json([
@@ -81,7 +81,8 @@ class PostsController extends Controller
 
     public function update(PostRequest $postRequest)
     {
-        $post = Post::where('user_id', Auth::id())->where('id', request('post'))->firstOrFail();
+        $post = Post::with('comments')
+            ->where('user_id', Auth::id())->where('id', request('post'))->firstOrFail();
 
         if (request()->has('image')) {
             $image = $this->uploadImage(request('image'));
