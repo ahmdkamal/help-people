@@ -25,7 +25,7 @@ class PostResource extends JsonResource
             'type' => $this->type,
             'image' => $this->image ? asset('/posts/'.$this->image): '',
             'offer_help' => (boolean)$this->offer_help,
-            'comments' => request('comment') != null
+            'comments' => request('post') != null
                 ?  CommentResource::collection($this->comments)
                 : $this->comments()->count(),
             'created_at' => strtotime($this->created_at)
