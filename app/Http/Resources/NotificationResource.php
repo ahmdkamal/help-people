@@ -19,7 +19,8 @@ class NotificationResource extends JsonResource
             'id' => $this->id ,
             'body' => $this->body,
             'title' => $this->title,
-            'notification_date' => strtotime($this->created_at)
+            'post' => PostResource::make($this->post),
+            'notification_date' => strtotime($this->created_at),
         ];
     }
 }
