@@ -37,7 +37,7 @@ class SendNotificationJob implements ShouldQueue
             [
                 'title' => $this->title,
                 "body" => "$this->body",
-                "post" => $this->post
+                "post_id" => $this->post->id
             ]);
     }
 }

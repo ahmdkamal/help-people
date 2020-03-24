@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Comment;
 use App\Http\Requests\CommentRequest;
 use App\Http\Resources\CommentResource;
-use App\Http\Resources\PostResource;
 use App\Jobs\SendNotificationJob;
 use App\Notification;
 use App\Post;
@@ -41,15 +40,13 @@ class CommentsController extends Controller
             ? "$commented_user commented to a post you are following"
             : "$commented_user replied to a post you are following";
 
-        $post = PostResource::make($post);
-
         foreach ($users as $user) {
 
             Notification::create([
                 'user_id' => $user,
                 'title' => $title,
                 'body' => $body,
-                "post_id" => $post['id'],
+                "post_id" => $post->id,
             ]);
             SendNotificationJob::dispatch($user, $post, $body, $title);
         }
